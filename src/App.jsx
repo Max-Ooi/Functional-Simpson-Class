@@ -7,6 +7,8 @@ import "./App.css";
 class App extends Component {
   state = {};
 
+
+
   async componentDidMount() {
     const { data } = await axios.get(
       `https://thesimpsonsquoteapi.glitch.me/quotes?count=10`
@@ -18,7 +20,12 @@ class App extends Component {
     });
 
     this.setState({ simpsons: data });
+
+    console.log(this.state.simpsons)
   }
+
+
+
 
   onLikeToggle = (id) => {
     const indexOf = this.state.simpsons.findIndex((char) => {
@@ -30,6 +37,9 @@ class App extends Component {
     this.setState({ simpsons });
   };
 
+
+
+
   onDelete = (id) => {
     const indexOf = this.state.simpsons.findIndex((char) => {
       return char.id === id;
@@ -39,12 +49,68 @@ class App extends Component {
     this.setState({ simpsons });
   };
 
+
+  onSearchInput = (e) => {
+    this.setState({searchInput: e.target.value})
+  }
+
+
+  onNameOrderInput = (e) => {
+    this.setState({NameOrderInput: e.target.value})
+  }
+
+
+
+  getFilteredSimpsons = () => {
+
+
+    const { simpsons, searchInput, NameOrderInput } = this.state;
+
+    let filteredSimpsons = [...simpsons]
+
+    //filter by the SearchInput box
+    if (searchInput) {
+
+      filteredSimpsons = filteredSimpsons.filter((item)=>{
+        
+        if (item.character.toLowerCase().includes(searchInput.toLowerCase()))
+        {return true;}
+
+      })
+    }
+
+    //Sort by Name order
+    
+    if (NameOrderInput === "A to Z") {
+      filteredSimpsons.sort((a, b) => {
+        if (a.character > b.character) return 1;
+        if (a.character < b.character) return -1;
+      }
+      )
+    } else if (NameOrderInput === "Z to A") {
+      filteredSimpsons.sort((a, b) => {
+        if (a.character > b.character) return -1;
+        if (a.character < b.character) return 1;
+      }
+      )
+    }
+
+    return filteredSimpsons;
+
+  }
+ 
+
+
   render() {
-    const { simpsons } = this.state;
+
+    console.log(this.state);
+
+    const { simpsons, searchInput } = this.state;
 
     if (!simpsons) return <Loading />;
 
     if (simpsons.length === 0) return <p>You deleted everything!</p>;
+
 
     //calculate the total
     let total = 0;
@@ -52,17 +118,22 @@ class App extends Component {
       if (char.liked) total++;
     });
 
+
     return (
       <>
         <h1>Total no of liked chars #{total}</h1>
         <Simpsons
-          simpsons={simpsons}
+          simpsons={this.getFilteredSimpsons()}
           onDelete={this.onDelete}
           onLikeToggle={this.onLikeToggle}
+          onSearchInput={this.onSearchInput}
+          onNameOrderInput={this.onNameOrderInput}
         />
       </>
     );
   }
 }
+
+
 
 export default App;

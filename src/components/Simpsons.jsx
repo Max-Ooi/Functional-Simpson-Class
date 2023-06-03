@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import Character from "./Character";
+import Controls from "./Controls";
 
 class Simpsons extends Component {
   render() {
-    const { simpsons, onDelete, onLikeToggle } = this.props;
+    const { simpsons, onDelete, onLikeToggle, onSearchInput, onNameOrderInput } = this.props;
 
     return (
-      <>
-        {simpsons.map((item, index) => {
+      <> 
+      
+        <Controls onSearchInput={onSearchInput} onNameOrderInput={onNameOrderInput}/>
+
+        {simpsons.map((item) => {
           return (
             <Character
               item={item}
@@ -17,6 +21,7 @@ class Simpsons extends Component {
             />
           );
         })}
+
       </>
     );
   }
