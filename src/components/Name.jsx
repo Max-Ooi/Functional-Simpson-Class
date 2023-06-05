@@ -1,18 +1,41 @@
-import React, { Component } from "react";
+import React from 'react';
+import { useState } from 'react';
 
-class Name extends Component {
-  render() {
-    const { liked, character, onLikeToggle, id } = this.props;
+const Name = (props) => {
 
-    return (
-      <div>
-        <h1>{character}</h1>
-        <button onClick={() => onLikeToggle(id)}>
+
+  const {character, onLikeToggle, id, liked} = props;
+
+  return (
+    <div className={liked ? "SimpsonItem liked" : "SimpsonItem disLinked"}>
+      <h1>{character}</h1>
+      <button onClick={() => onLikeToggle(id)}>
           {liked ? "Liked" : "Not liked"}
-        </button>
+      </button>
       </div>
     );
-  }
 }
-
+ 
 export default Name;
+
+
+
+
+// import React, { Component } from "react";
+
+// class Name extends Component {
+//   render() {
+//     const { liked, character, onLikeToggle, id } = this.props;
+
+//     return (
+//       <div>
+//         <h1>{character}</h1>
+        // <button onClick={() => onLikeToggle(id)}>
+        //   {liked ? "Liked" : "Not liked"}
+        // </button>
+//       </div>
+//     );
+//   }
+// }
+
+// export default Name;

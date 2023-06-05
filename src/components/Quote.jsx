@@ -1,9 +1,12 @@
-import React, { Component } from "react";
+import React from 'react';
 
-class Quote extends Component {
-  render() {
-    return <p>{this.props.quote}</p>;
-  }
+const Quote = (props) => {
+
+  const {quote} = props;
+
+  return ( <p>{quote}</p>  );
 }
-
+ 
 export default Quote;
+
+
