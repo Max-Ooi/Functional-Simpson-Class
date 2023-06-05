@@ -29,24 +29,50 @@ const App = () => {
 
 console.log(simpsons)
 
-
+//toggle liked function
   const onLikeToggle = (id) => {
    const copySimpsons = [...simpsons]
-
    const indexOf = copySimpsons.findIndex((item) => {
     return item.id === id;
    })
-
    copySimpsons[indexOf].liked = !copySimpsons[indexOf].liked 
-
    setSimpson(copySimpsons)
-
   };
+
+// Delete function
+
+  const onDelete = (id) => {
+    const copySimpsons1 = [...simpsons]
+    const indexOf1 = copySimpsons1.findIndex((char) => {
+      return char.id === id;
+    });
+
+    copySimpsons1.splice(indexOf1, 1);
+    setSimpson(copySimpsons1);
+  };
+
+
+
+
 
 
   if (!simpsons) return <Loading/>;
 
-  return <Simpsons simpsons={simpsons} onLikeToggle={onLikeToggle}/>;
+  if (simpsons.length === 0) return <p>You deleted everything!</p>;
+
+//     //calculate the total
+  let total = 0;
+  simpsons.forEach((char) => {
+  if (char.liked) {total++;}
+  });
+
+
+  return ( 
+  <div>
+    <h1>Total no of liked chars #{total}</h1>
+    <Simpsons simpsons={simpsons} onLikeToggle={onLikeToggle} onDelete={onDelete}/>
+  </div>
+  )  
 }
  
 
@@ -77,7 +103,6 @@ export default App;
 //   state = {};
 
 
-
   // async componentDidMount() {
   //   const { data } = await axios.get(
   //     `https://thesimpsonsquoteapi.glitch.me/quotes?count=10`
@@ -94,8 +119,6 @@ export default App;
   // }
 
 
-
-
   // onLikeToggle = (id) => {
   //   const indexOf = this.state.simpsons.findIndex((char) => {
   //     return char.id === id;
@@ -107,8 +130,6 @@ export default App;
   // };
 
 
-
-
 //   onDelete = (id) => {
 //     const indexOf = this.state.simpsons.findIndex((char) => {
 //       return char.id === id;
@@ -117,6 +138,19 @@ export default App;
 //     simpsons.splice(indexOf, 1);
 //     this.setState({ simpsons });
 //   };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //   onSearchInput = (e) => {
@@ -168,6 +202,15 @@ export default App;
 
 //   }
  
+
+
+
+
+
+
+
+
+
 
 
 //   render() {

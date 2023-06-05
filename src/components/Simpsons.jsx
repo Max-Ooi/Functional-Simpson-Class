@@ -2,7 +2,7 @@ import Character from "./Character";
 
 const Simpsons = (props) => {
 
-  const { simpsons, onLikeToggle } = props;
+  const { simpsons, onLikeToggle, onDelete } = props;
 
 
   return (
@@ -13,7 +13,7 @@ const Simpsons = (props) => {
             <Character
               item={item}
               key={item.id}
-              // onDelete={onDelete}
+              onDelete={onDelete}
               onLikeToggle={onLikeToggle}
             />
           );
