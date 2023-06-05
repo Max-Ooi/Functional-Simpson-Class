@@ -1,22 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Controls extends Component {
-    
-    render() { 
+const Controls = (props) => {
 
-        const {onSearchInput, onNameOrderInput} = this.props;
+    const {onSearchInput, onNameOrderInput} = props;
 
-        return (
-           <>
-           <input onInput={onSearchInput} type="text"/>
-           <select onInput={onNameOrderInput} >
-            <option value=""></option>
-            <option value="A to Z">A to Z</option>
-            <option value="Z to A">Z to A</option>
-           </select>
-           </> 
+    return (
+        <>
+        <input onInput={onSearchInput} type="text"/>
+        <select onInput={onNameOrderInput} >
+        <option value=""></option>
+        <option value="A to Z">A to Z</option>
+        <option value="Z to A">Z to A</option>
+        </select>
+        </>   
         );
-    }
 }
  
 export default Controls;
+
