@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import axios from "axios";
 import Loading from './components/Loading';
 import Simpsons from './components/Simpsons';
@@ -12,25 +12,27 @@ const App = () => {
   const [searchInput, setSearchInput] = useState("");
   const [nameOrderInput, setNameOrderInput] = useState("");
 
-  //function to get the Simpson API data
-  const getData = async () => {
-    try {const { data } = await axios.get(
-      `https://thesimpsonsquoteapi.glitch.me/quotes?count=10`
-    );
+  // //function to get the Simpson API data
 
-    //fixed the api data to have unique id
-    data.forEach((element, index) => {
-      element.id = index + Math.random();
-    });
-
-    setSimpson(data)
+  const getData = useCallback(async () => {
+      try {const { data } = await axios.get(
+        `https://thesimpsonsquoteapi.glitch.me/quotes?count=15&character=${searchInput}`
+      );
   
-  }catch(error){
-      console.log(error)}
-  }
+      //fixed the api data to have unique id
+      data.forEach((element, index) => {
+        element.id = index + Math.random();
+      });
+  
+      setSimpson(data)
+    
+    }catch(error){
+        console.log(error)}
+    },[searchInput])
+
 
   //invokes the Simpson API data function
-  useEffect(()=>{getData()},[])
+  useEffect(()=>{getData();},[getData])
 
 console.log(simpsons)
 
@@ -82,15 +84,14 @@ console.log(simpsons)
 
 // filter the results   
 
+    // let filteredSimpsons = [...simpsons]
+    // if (searchInput) {
+    //   filteredSimpsons = filteredSimpsons.filter((item)=>{ 
+    //   return item.character.toLowerCase().includes(searchInput.toLowerCase());
+    //   })
+    // }
 
-    let filteredSimpsons = [...simpsons]
 
-    if (searchInput) {
-      filteredSimpsons = filteredSimpsons.filter((item)=>{
-    
-      return item.character.toLowerCase().includes(searchInput.toLowerCase());
-      })
-    }
 
     //Sort by Name order
     
@@ -112,7 +113,7 @@ console.log(simpsons)
   <div>
     <h1>Total no of liked chars #{total}</h1>
     <Simpsons 
-    simpsons={filteredSimpsons} 
+    simpsons={simpsons} 
     onLikeToggle={onLikeToggle} 
     onDelete={onDelete}
     onSearchInput={onSearchInput}
