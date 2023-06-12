@@ -61,6 +61,15 @@ const App = () => {
   };
 
   const onSearchInput = async (e) => {
+
+    const {value} = e.target;
+
+    if (value.includes('fuck')) {
+      setInput({ searchInput: 'f*ck'})
+      return;
+    }  
+
+
     setInput({ searchInput: e.target.value });
 
     //Validation
@@ -120,6 +129,7 @@ const App = () => {
       <h1>Total no of liked chars #{total}</h1>
       <p>{errors && errors.searchInput}</p>
       <Simpsons
+        input={input.searchInput}
         simpsons={simpsons}
         onLikeToggle={onLikeToggle}
         onDelete={onDelete}
